@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>404错误 - shopping多用户商城系统 V1.4演示站点</title>
+<link href="http://c2c.shopping.com/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://c2c.shopping.com/resources/style/system/front/default/css/index.css" type="text/css" rel="stylesheet" />
+<link href="http://c2c.shopping.com/resources/style/system/front/default/css/error.css" type="text/css" rel="stylesheet" />
+<script src="http://c2c.shopping.com/resources/js/jquery-1.6.2.js"></script>
+</head>
+<body>
+﻿<div class="top">
+  <div class="page">
+    <div class="pageright" id="site-nav">
+      <ul class="quick-menu">
+        <li class="mytaobao menu-item menupx">
+          <div class="menu"> <a class="menu-hd" href="http://c2c.shopping.com/buyer/index.htm" rel="nofollow">买家中心<b></b></a>
+            <div class="menu-bd">
+              <div class="menu-bd-panel">
+                <div><a href="http://c2c.shopping.com/buyer/order.htm" rel="nofollow">已买到的宝贝</a><a href="http://c2c.shopping.com/buyer/index.htm?type=4"  rel="nofollow">店铺动态</a><a href="http://c2c.shopping.com/buyer/index.htm?type=2"  rel="nofollow">好友动态</a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+		<li class="mytaobao menu-item menupx">
+          <div class="menu"> <a class="menu-hd" href="http://c2c.shopping.com/seller/index.htm" rel="nofollow">卖家中心<b></b></a>
+            <div class="menu-bd">
+              <div class="menu-bd-panel">
+                <div> <a href="http://c2c.shopping.com/seller/order.htm"  rel="nofollow">已卖出的宝贝</a> <a href="http://c2c.shopping.com/seller/goods.htm" rel="nofollow">出售中的宝贝</a>
+                                 </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <script>
+		 var goods_count=0;
+		 var total_price=0;
+		 		 		function cart_remove(id,store_id){
+           jQuery.post("/remove_goods_cart.htm",{"id":id,"store_id":store_id},function(data){
+           jQuery("div[class=table] tr[id="+id+"]").remove();
+		   jQuery(".shopping[id="+id+"]").remove();
+		   jQuery(".shopp_ingtop[id="+id+"]").remove();
+           jQuery("#cart_goods_count_top").html(data.count);
+           jQuery("#cart_goods_price_top").html(data.total_price);
+		   jQuery("#top_total_price_"+store_id).html(data.total_price);
+           if(store_id!=""){
+              jQuery("#total_price_"+store_id).html(data.sc_total_price);
+           }
+		   if( jQuery("form[id=cart_"+store_id+"]").find("tr[goods_list^=goods_info]").length==0){
+		  	 jQuery("form[id=cart_"+store_id+"]").remove();
+		   }
+           if(jQuery("tr[goods_list^=goods_info]").length==0){
+              jQuery(".car_nogoods").show();
+           }
+         },"json");
+       }
+	    jQuery(document).ready(function(){
+		   jQuery("#cart_goods_top_menu").mouseover(function(){
+			  jQuery.ajax({type:'POST',url:'/cart_menu_detail.htm',data:'',
+						   beforeSend:function(){
+							     jQuery("#cart_goods_top_info").empty().html('<div class="menu-bd-panel"><div style="text-align:center;"><img src="http://c2c.shopping.com/resources/style/common/images/loader.gif" /></div></div>');
+							     jQuery("#cart_goods_top_info").show();
+							   },
+						  success:function(data){
+							     jQuery("#cart_goods_top_info").empty();
+								 jQuery("#cart_goods_top_info").html(data);
+							   }
+						});
+		   });
+		   jQuery("#cart_menu").mouseleave(function(){
+			  jQuery("#cart_goods_top_info").hide();
+		   });
+		});
+	   </script>
+        <li class="search menu-item menupx">
+          <div class="menu" id="cart_menu"><span class="menu-hd" id="cart_goods_top_menu"><s></s>购物车<span id="cart_goods_count_top">0</span>种商品<b></b></span>
+            <div class="menu-bd" id="cart_goods_top_info">
+             <div class="menu-bd-panel">
+                <div style="text-align:center;"><img src="http://c2c.shopping.com/resources/style/common/images/loader.gif" /></div>
+             </div>
+              
+            </div>
+          </div>
+        </li>
+        <li class="menupx"><a href="http://c2c.shopping.com/buyer/message.htm">站内短信</a></li>
+		<li class="menupx"><a href="http://c2c.shopping.com/buyer/favorite_goods.htm">我的收藏</a></li>
+        		        <li class="menupx" style="background:none;"><a href="http://c2c.shopping.com/articlelist_help.htm">帮助中心</a></li>
+        		      </ul>
+    </div>
+    <div class="pageleft"><span>亲，欢迎来到shopping！</span><span class="pxlr"><a href="http://c2c.shopping.com/user/login.htm" class="lightblue">登录</a></span><span class="pxlr">或</span><span class="pxlr"><a href="http://c2c.shopping.com/register.htm" class="lightblue">注册</a></span> </div>
+  </div>
+</div>
+
+<div class="main">
+  ﻿<script>
+jQuery(document).ready(function(){
+  jQuery(".toph_bgsear li").mouseover(function(){
+      jQuery(".toph_bgsear>li").show();
+  }).mouseleave(function(){
+       jQuery(".toph_bgsear>li").last().hide();
+  }).click(function(){
+	 var index=jQuery(this).index();
+	 if(index==1){
+	   var f_text=jQuery(".toph_bgsear li").find("a").first().text();
+	   var f_type=jQuery(".toph_bgsear li").first().attr("type");
+	   jQuery(".toph_bgsear li").attr("type",jQuery(this).attr("type"));
+       jQuery(".toph_bgsear li").find("a").first().html(jQuery(this).find("a").text()+"<s></s>");
+	   jQuery(".toph_bgsear li").find("a").last().text(f_text);
+	   jQuery(".toph_bgsear li").last().attr("type",f_type);
+	   jQuery("#type").val(jQuery(".toph_bgsear li").first().attr("type"));
+	   jQuery(".toph_bgsear>li").last().hide();
+	 }
+  });
+
+  jQuery(".two_code_a").click(function(){
+	  jQuery(this).parent().remove();
+	  });
+	
+});
+function search_form(){
+  var keyword=arguments[0];
+  var type=arguments[1];
+  if(keyword!=""&&keyword!=undefined){
+   jQuery("#keyword").val(keyword);
+  }
+  if(type!=""&&type!=undefined){
+    jQuery("#type").val(type);
+  }
+  jQuery("#searchForm").submit();	
+  jQuery("#keyword").val("");
+}
+</script>
+
+<form action="http://c2c.shopping.com/search.htm" method="post" target="_blank" id="searchForm">
+  <input name="type" type="hidden" id="type" value="goods" />
+  <div class="head">
+    <div class="logo">  <a href="http://c2c.shopping.com/index.htm"><img src="http://c2c.shopping.com/resources/style/system/front/default/images/logo.png" border="0" /> </a>  </div>
+    <div class="toph_bigsearch">
+      <div class="toph_sear">
+        <ul class="toph_bgsear">
+          <li class="this" type="goods"><a href="javascript:void(0);">宝贝<s></s></a></li>
+          <li style="display:none" type="store"><a href="javascript:void(0);">店铺</a></li>
+        </ul>
+        <input name="keyword" type="text" id="keyword" placeholder="搜索其实真的很简单！" x-webkit-speech lang="zh-CN" onwebkitspeechchange="jQuery('#searchForm').submit()" class="toph_sear_txt"/>
+        <input name="input" type="button" value="搜索" style="cursor:pointer;" onclick="search_form();" class="toph_sear_btn" />
+      </div>
+      <div class="keyword">  <a href="javascript:void(0);" onclick="search_form('iphone5s','goods');">iphone5s</a>  <a href="javascript:void(0);" onclick="search_form('男装','goods');">男装</a>  <a href="javascript:void(0);" onclick="search_form('女装','goods');">女装</a>  <a href="javascript:void(0);" onclick="search_form('毛呢外套','goods');">毛呢外套</a>  <a href="javascript:void(0);" onclick="search_form('雪地靴','goods');">雪地靴</a>  <a href="javascript:void(0);" onclick="search_form('羽绒服','goods');">羽绒服</a>  <a href="javascript:void(0);" onclick="search_form('流行男鞋','goods');">流行男鞋</a>  <a href="javascript:void(0);" onclick="search_form('潮棉衣','goods');">潮棉衣</a>  <a href="javascript:void(0);" onclick="search_form('秋冬连衣裙','goods');">秋冬连衣裙</a>  <a href="javascript:void(0);" onclick="search_form('打底裤','goods');">打底裤</a>  <a href="javascript:void(0);" onclick="search_form('时尚女包','goods');">时尚女包</a>  </div>
+    </div>
+        <div class="two_code"> <a href="javascript:void(0);" class="two_code_a"></a> <span class="two_code_box"><b>微信商城入口</b><img src="http://c2c.shopping.com/upload/system/df580a0d-8cea-43e1-9162-2464defd4774.jpg" width="84" height="84" /></span> </div>
+     </div>
+</form>
+
+  ﻿<div class="nav"> <span class="navright"></span>
+    <div class="navleft">
+    
+        <b class="nav_lefts">全部商品分类
+    <span>
+    </span></b>
+    </div>
+    <ul class="navul">
+                    <li><a href="http://c2c.shopping.com/index.htm" id="65537" target="_blank" original_url="index.htm"><span>首页</span></a></li>
+                <li><a href="http://c2c.shopping.com/brand.htm" id="65538" target="_blank" original_url="brand.htm"><span>品牌</span></a></li>
+                <li><a href="http://c2c.shopping.com/integral.htm" id="2" target="_blank" original_url="integral.htm"><span>积分商城</span></a></li>
+                <li><a href="http://c2c.shopping.com/group.htm" id="65536" target="_blank" original_url="group.htm"><span>团购</span></a></li>
+                <li><a href="http://c2c.shopping.com/activity_1.htm" id="32768" target="_blank" original_url="activity.htm?id=1"><span>国庆大酬宾</span></a></li>
+                <li><a href="http://c2c.shopping.com/bargain.htm" id="229377" target="_blank" original_url="bargain.htm"><span>天天特价</span></a></li>
+                <li><a href="http://c2c.shopping.com/delivery.htm" id="229379" target="_blank" original_url="delivery.htm"><span>买就送</span></a></li>
+                <li><a href="http://c2c.shopping.com/sparegoods.htm" id="229380" target="_blank" original_url="sparegoods.htm"><span>闲置商品</span></a></li>
+        </ul>
+  </div>
+<script>
+jQuery(document).ready(function(){
+  jQuery(".navul a").each(function(){
+    var original_url=jQuery(this).attr("original_url");
+	if("/404.htm".indexOf(original_url)>=0){
+	   jQuery(this).addClass("this");	
+	}
+  });
+});
+</script>
+
+  <div class="index">
+    <div class="index2">
+      <div class="errorpage">
+        <div class="errortop"></div>
+        <div class="errordex">
+          <div class="pagertop">
+            <h1>出错404咯！</h1>
+            <p><span>抱歉，您输入的网页无法前往，您可以通过以下方式获得支持：</span></p>
+            <p><span>1、登录<a href="#" target="_blank">shopping官方网站</a>，获取最新版商城系统;</span></p>
+            <p><span>2、登录<a href="#/bbs" target="_blank">shopping官方论坛</a>，提交您的问题所在;</span></p>
+          </div>
+          <div class="errp">
+            <div class="errpbox">
+              <div class="errorimg"><img src="http://c2c.shopping.com/resources/style/system/front/default/images/error/error404.jpg" width="150" height="220" /></div>
+              <div class="errorback"><a href="http://c2c.shopping.com/index.htm">返回首页</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="errorbtom"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+	  var count=3;
+	  window.setInterval(go,1000);
+	  function go(){
+	    count--;
+	    if(count==0) window.location.href="http://c2c.shopping.com/index.htm";
+	  }
+	</script>
+  ﻿
+<script>
+jQuery(document).ready(function(){
+			//滚动条滚动事件
+	jQuery(window).scroll(function(){
+	var top = jQuery(document).scrollTop();
+	if(top==0){
+		jQuery(".back_box").hide();
+		}else{
+		jQuery(".back_box").show();	
+			}
+	});						
+});
+</script>
+<div class="footer">
+  <ul>
+    <li>
+                     <a href="http://c2c.shopping.com/index.htm" >首页</a>|                 <a href="http://c2c.shopping.com/article_join.htm" target="_blank">招聘英才</a>|                 <a href="http://c2c.shopping.com/article_adver.htm" target="_blank">广告合作</a>|                 <a href="http://c2c.shopping.com/article_contact.htm" target="_blank">联系我们</a>|                 <a href="http://c2c.shopping.com/article_about.htm" target="_blank">关于shopping</a>        </li>
+    <li class="hui2">Copyright 2011-2014 shopping Inc. All rights reserved</li>
+    <li class="hui2">Powered by shopping V1.4</li>
+    <li></li>
+  </ul>
+</div>
+
+
+<!--返回最顶部-->
+<div class="back_box"  style=" display:none;width:50px; height:50px;position:fixed; bottom:180px; right:25px; _position:absolute;/*兼容IE6的代码*/
+_bottom:auto;/*兼容IE6的代码*/
+_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0))); ">
+    <div class="back_index"><a href="http://c2c.shopping.com/index.htm" target="_blank"  title="返回主页"></a></div>
+    <div class="back_top"><a id="toTop" href="#" bosszone="hometop" style="display: block;" onclick="window.scrollTo(0,0);return false" title="返回顶部" target="_self" ></a></div>
+</div>
+</div>
+</body>
+</html>
